@@ -206,6 +206,14 @@ public class BookingSystem {
         booking.setReview(new Review(comment, rating));
         return "SUCCESS: Review submitted. Thank you!";
     }
+
+    public void generateMonthlyLessonReport() {
+        new ReportGenerator(lessons, bookings).generateMonthlyLessonReport();
+    }
+
+    public void generateMonthlyChampionReport() {
+        new ReportGenerator(lessons, bookings).generateMonthlyChampionReport();
+    }
     
     // Methods to be implemented in later phases
     public List<Member> getMembers() { return members; }
