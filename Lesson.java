@@ -11,6 +11,8 @@ public class Lesson {
     private double price;
     private int capacity;
     private List<Booking> bookings;
+    public static final int MAX_CAPACITY = 4;
+    public static final int DEFAULT_CAPACITY = MAX_CAPACITY;
 
     public Lesson(ExerciseType type, BookingDay day, SessionTime time,
                   String instructor, double price) {
@@ -20,7 +22,7 @@ public class Lesson {
         this.time = time;
         this.instructor = instructor;
         this.price = price;
-        this.capacity = 4;
+        this.capacity = DEFAULT_CAPACITY;
         this.bookings = new ArrayList<>();
     }
 

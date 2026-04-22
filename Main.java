@@ -9,6 +9,9 @@ public class Main {
 
         DataSeeder.seed(system);
 
+        system.addLesson(new Lesson(ExerciseType.YOGA, BookingDay.SATURDAY, SessionTime.MORNING, "Alice", 10));
+        system.addLesson(new Lesson(ExerciseType.PILATES, BookingDay.SUNDAY, SessionTime.AFTERNOON, "Bob", 12));
+
         boolean running = true;
 
         while (running) {

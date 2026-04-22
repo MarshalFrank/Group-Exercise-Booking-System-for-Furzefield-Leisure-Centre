@@ -17,13 +17,14 @@ public class DataSeeder {
         for (Member m : members) system.addMember(m);
 
         // --- 48 Lessons: 8 weekends × 2 days × 3 sessions ---
-        // Instructors cycle through 6 types; price varies by type
+        // Instructors cycle through 5 types; price varies by type
         ExerciseType[] types = ExerciseType.values();
         String[][] instructors = {
-            {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Franklin Dike"},
-            {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Franklin Dike"}
+            {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Chelsea Green"},
+            {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Chelsea Green"}
         };
-        double[] prices = {12.00, 10.00, 11.00, 13.00, 12.50, 11.50};
+        double[] prices = {12.00, 10.00, 11.00, 13.00, 12.50, 12.30};
+
         BookingDay[] days = {BookingDay.SATURDAY, BookingDay.SUNDAY};
         SessionTime[] times = {SessionTime.MORNING, SessionTime.AFTERNOON, SessionTime.EVENING};
 
