@@ -209,7 +209,7 @@ public class BookingSystem {
         booking.setReview(new Review(comment, rating));
         return "SUCCESS: Review submitted. Thank you!";
     }
-    
+
     public void generateMonthlyLessonReport() {
         new ReportGenerator(lessons, bookings).generateMonthlyLessonReport();
     }

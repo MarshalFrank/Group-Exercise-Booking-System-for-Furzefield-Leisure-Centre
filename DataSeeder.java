@@ -24,6 +24,7 @@ public class DataSeeder {
             {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Chelsea Green"}
         };
         double[] prices = {12.00, 10.00, 11.00, 13.00, 12.50, 12.30};
+
         BookingDay[] days = {BookingDay.SATURDAY, BookingDay.SUNDAY};
         SessionTime[] times = {SessionTime.MORNING, SessionTime.AFTERNOON, SessionTime.EVENING};
 
