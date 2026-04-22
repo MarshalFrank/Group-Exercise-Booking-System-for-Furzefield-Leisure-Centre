@@ -23,6 +23,11 @@ public class Main {
             switch (choice) {
                 case 1 -> viewTimetableMenu();
                 case 2 -> bookLessonMenu();
+                case 3 -> changeBookingMenu();
+                case 4 -> cancelBookingMenu();
+                case 5 -> attendLessonMenu();
+                case 6 -> leaveReviewMenu();
+                case 7 -> viewBookingsMenu();
                 case 0 -> running = false;
                 default -> System.out.println("Invalid option.");
             }
@@ -35,6 +40,11 @@ public class Main {
         System.out.println("\n===== MAIN MENU =====");
         System.out.println("1. View Timetable");
         System.out.println("2. Book a Lesson");
+        System.out.println("3. Change a Booking");
+        System.out.println("4. Cancel a Booking");
+        System.out.println("5. Attend a Lesson");
+        System.out.println("6. Leave a Review");
+        System.out.println("7. View My Bookings");
         System.out.println("0. Exit");
         System.out.print("Choice: ");
     }
@@ -76,6 +86,58 @@ public class Main {
         int lid = readInt();
 
         System.out.println(system.bookLesson(mid, lid));
+    }
+
+    private static void changeBookingMenu() {
+        System.out.print("Member ID: "); int mid = readInt();
+        system.viewMemberBookings(mid);
+
+        System.out.print("Booking ID to change: "); int bid = readInt();
+
+        system.viewTimetableByDay(BookingDay.SATURDAY);
+        system.viewTimetableByDay(BookingDay.SUNDAY);
+
+        System.out.print("New Lesson ID: "); int lid = readInt();
+
+        System.out.println(system.changeBooking(mid, bid, lid));
+    }
+
+    private static void cancelBookingMenu() {
+        System.out.print("Member ID: "); int mid = readInt();
+        system.viewMemberBookings(mid);
+
+        System.out.print("Booking ID to cancel: "); int bid = readInt();
+
+        System.out.println(system.cancelBooking(mid, bid));
+    }
+
+    private static void attendLessonMenu() {
+        System.out.print("Member ID: "); int mid = readInt();
+        system.viewMemberBookings(mid);
+
+        System.out.print("Booking ID to mark as attended: "); int bid = readInt();
+
+        System.out.println(system.attendLesson(mid, bid));
+    }
+
+    private static void leaveReviewMenu() {
+        System.out.print("Member ID: "); int mid = readInt();
+        system.viewMemberBookings(mid);
+
+        System.out.print("Booking ID to review: "); int bid = readInt();
+
+        System.out.print("Comment: ");
+        String comment = scanner.nextLine();
+
+        System.out.print("Rating (1-5): ");
+        int rating = readInt();
+
+        System.out.println(system.leaveReview(mid, bid, comment, rating));
+    }
+
+    private static void viewBookingsMenu() {
+        System.out.print("Member ID: "); int mid = readInt();
+        system.viewMemberBookings(mid);
     }
 
     private static int readInt() {

@@ -96,6 +96,116 @@ public class BookingSystem {
 
         return "SUCCESS: Booking confirmed. Booking ID: " + booking.getId();
     }
+
+    public Booking findBookingById(int id) {
+        return bookings.stream()
+            .filter(b -> b.getId() == id)
+            .findFirst()
+            .orElse(null);
+    }
+
+    public void viewMemberBookings(int memberId) {
+        Member member = findMemberById(memberId);
+        if (member == null) { 
+            System.out.println("Member not found."); 
+            return; 
+        }
+
+        System.out.println("\n===== Bookings for " + member.getName() + " =====");
+
+        bookings.stream()
+            .filter(b -> b.getMember().getId() == memberId)
+            .forEach(b -> {
+                System.out.printf("  [%d] %-12s %-10s %-10s Status: %-10s",
+                    b.getId(), b.getLesson().getType(),
+                    b.getLesson().getDay(), b.getLesson().getTime(),
+                    b.getStatus());
+
+                if (b.getReview() != null)
+                    System.out.printf(" | Rating: %d | \"%s\"",
+                        b.getReview().getRating(),
+                        b.getReview().getComment());
+
+                System.out.println();
+            });
+    }
+
+    public String cancelBooking(int memberId, int bookingId) {
+        Booking booking = findBookingById(bookingId);
+        if (booking == null) return "ERROR: Booking not found.";
+        if (booking.getMember().getId() != memberId)
+            return "ERROR: This booking does not belong to this member.";
+        if (booking.getStatus() == BookingStatus.CANCELLED)
+            return "ERROR: Booking is already cancelled.";
+        if (booking.getStatus() == BookingStatus.ATTENDED)
+            return "ERROR: Cannot cancel a lesson already attended.";
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        return "SUCCESS: Booking " + bookingId + " has been cancelled.";
+    }
+
+    public String changeBooking(int memberId, int oldBookingId, int newLessonId) {
+        Booking oldBooking = findBookingById(oldBookingId);
+        if (oldBooking == null) return "ERROR: Original booking not found.";
+        if (oldBooking.getMember().getId() != memberId)
+            return "ERROR: Booking does not belong to this member.";
+        if (oldBooking.getStatus() != BookingStatus.BOOKED
+                && oldBooking.getStatus() != BookingStatus.CHANGED)
+            return "ERROR: Only active bookings can be changed.";
+
+        Member member = findMemberById(memberId);
+        Lesson newLesson = findLessonById(newLessonId);
+
+        if (newLesson == null) return "ERROR: New lesson not found.";
+        if (newLesson.isFull()) return "ERROR: New lesson is fully booked.";
+        if (alreadyBooked(member, newLesson))
+            return "ERROR: Already booked on this lesson.";
+
+        oldBooking.setStatus(BookingStatus.CANCELLED);
+
+        if (hasTimeConflict(member, newLesson)) {
+            oldBooking.setStatus(BookingStatus.BOOKED);
+            return "ERROR: New lesson conflicts with another booking.";
+        }
+
+        Booking newBooking = new Booking(member, newLesson);
+        newBooking.setStatus(BookingStatus.CHANGED);
+
+        newLesson.getBookings().add(newBooking);
+        bookings.add(newBooking);
+
+        return "SUCCESS: Booking changed. New Booking ID: " + newBooking.getId();
+    }
+
+    public String attendLesson(int memberId, int bookingId) {
+        Booking booking = findBookingById(bookingId);
+        if (booking == null) return "ERROR: Booking not found.";
+        if (booking.getMember().getId() != memberId)
+            return "ERROR: Booking does not belong to this member.";
+        if (booking.getStatus() == BookingStatus.CANCELLED)
+            return "ERROR: Cannot attend a cancelled booking.";
+        if (booking.getStatus() == BookingStatus.ATTENDED)
+            return "ERROR: Already marked as attended.";
+
+        booking.setStatus(BookingStatus.ATTENDED);
+        return "SUCCESS: Attendance recorded for booking " + bookingId + ".";
+    }
+
+    public String leaveReview(int memberId, int bookingId, String comment, int rating) {
+        Booking booking = findBookingById(bookingId);
+        if (booking == null) return "ERROR: Booking not found.";
+        if (booking.getMember().getId() != memberId)
+            return "ERROR: Booking does not belong to this member.";
+        if (booking.getStatus() != BookingStatus.ATTENDED)
+            return "ERROR: You can only review lessons you have attended.";
+        if (booking.getReview() != null)
+            return "ERROR: You have already reviewed this booking.";
+        if (rating < 1 || rating > 5)
+            return "ERROR: Rating must be between 1 and 5.";
+
+        booking.setReview(new Review(comment, rating));
+        return "SUCCESS: Review submitted. Thank you!";
+    }
     
     // Methods to be implemented in later phases
     public List<Member> getMembers() { return members; }
