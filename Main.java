@@ -7,9 +7,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to Furzefield Leisure Centre Booking System");
 
-        // TEMP DATA (until Phase 4)
-        system.addMember(new Member("John", "123"));
-        system.addMember(new Member("Mary", "456"));
+        DataSeeder.seed(system);
 
         system.addLesson(new Lesson(ExerciseType.YOGA, BookingDay.SATURDAY, SessionTime.MORNING, "Alice", 10));
         system.addLesson(new Lesson(ExerciseType.PILATES, BookingDay.SUNDAY, SessionTime.AFTERNOON, "Bob", 12));
@@ -28,6 +26,8 @@ public class Main {
                 case 5 -> attendLessonMenu();
                 case 6 -> leaveReviewMenu();
                 case 7 -> viewBookingsMenu();
+                case 8 -> system.generateMonthlyLessonReport();
+                case 9 -> system.generateMonthlyChampionReport();
                 case 0 -> running = false;
                 default -> System.out.println("Invalid option.");
             }
@@ -45,6 +45,8 @@ public class Main {
         System.out.println("5. Attend a Lesson");
         System.out.println("6. Leave a Review");
         System.out.println("7. View My Bookings");
+        System.out.println("8. Monthly Lesson Report");
+        System.out.println("9. Champion Exercise Report");
         System.out.println("0. Exit");
         System.out.print("Choice: ");
     }

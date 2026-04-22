@@ -76,6 +76,9 @@ public class BookingSystem {
     }
 
     public String bookLesson(int memberId, int lessonId) {
+        String validationError = validateMemberLesson(memberId, lessonId);
+        if (validationError != null) return validationError;
+        
         Member member = findMemberById(memberId);
         if (member == null) return "ERROR: Member not found.";
 
@@ -200,11 +203,25 @@ public class BookingSystem {
             return "ERROR: You can only review lessons you have attended.";
         if (booking.getReview() != null)
             return "ERROR: You have already reviewed this booking.";
-        if (rating < 1 || rating > 5)
-            return "ERROR: Rating must be between 1 and 5.";
+        if (rating < Review.MIN_RATING || rating > Review.MAX_RATING)
+            return "ERROR: Rating must be between " + Review.MIN_RATING + " and " + Review.MAX_RATING + ".";
 
         booking.setReview(new Review(comment, rating));
         return "SUCCESS: Review submitted. Thank you!";
+    }
+    
+    public void generateMonthlyLessonReport() {
+        new ReportGenerator(lessons, bookings).generateMonthlyLessonReport();
+    }
+
+    public void generateMonthlyChampionReport() {
+        new ReportGenerator(lessons, bookings).generateMonthlyChampionReport();
+    }
+
+    private String validateMemberLesson(int memberId, int lessonId) {
+        if (findMemberById(memberId) == null) return "ERROR: Member not found.";
+        if (findLessonById(lessonId) == null) return "ERROR: Lesson not found.";
+        return null;
     }
     
     // Methods to be implemented in later phases
