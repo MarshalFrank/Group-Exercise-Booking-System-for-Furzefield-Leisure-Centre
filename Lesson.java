@@ -10,13 +10,13 @@ public class Lesson {
     private String instructor;
     private double price;
     private int capacity;
-    private final String month;
+    private final int month;
     private List<Booking> bookings;
     public static final int MAX_CAPACITY = 4;
     public static final int DEFAULT_CAPACITY = MAX_CAPACITY;
 
     public Lesson(ExerciseType type, BookingDay day, SessionTime time,
-                  String instructor, double price, String
+                  String instructor, double price, int
                    month) {
         this.id = counter++;
         this.type = type;
@@ -36,7 +36,7 @@ public class Lesson {
     public String getInstructor() { return instructor; }
     public double getPrice() { return price; }
     public int getCapacity() { return capacity; }
-    public String getMonth() { return month; }
+    public int getMonth() { return month; }
     public List<Booking> getBookings() { return bookings; }
 
     public boolean isFull() {
