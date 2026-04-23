@@ -7,6 +7,24 @@ public class BookingSystem {
     private List<Lesson> lessons;
     private List<Booking> bookings;
 
+    private String getMonthName(int month) {
+        return switch (month) {
+            case 1 -> "January";
+            case 2 -> "February";
+            case 3 -> "March";
+            case 4 -> "April";
+            case 5 -> "May";
+            case 6 -> "June";
+            case 7 -> "July";
+            case 8 -> "August";
+            case 9 -> "September";
+            case 10 -> "October";
+            case 11 -> "November";
+            case 12 -> "December";
+            default -> "Invalid Month";
+        };
+    }
+
     public BookingSystem() {
         this.members = new ArrayList<>();
         this.lessons = new ArrayList<>();
@@ -36,26 +54,44 @@ public class BookingSystem {
     }
 
     public void viewTimetableByDay(BookingDay day) {
-        System.out.println("\n===== Timetable for " + day + " =====");
+        System.out.println("\n===== Timetable — " + day + " =====");
+        System.out.printf("%-5s %-12s %-10s %-10s %-18s %-8s %-6s%n",
+                "ID", "Type", "Day", "Month", "Time", "Price", "Spots");
+        System.out.println("-".repeat(75));
+
         lessons.stream()
-            .filter(l -> l.getDay() == day)
-            .sorted(Comparator.comparing(Lesson::getTime))
-            .forEach(l -> System.out.printf(
-                "  [%d] %-12s | %-10s | Instructor: %-15s | Price: £%.2f | Spots: %d%n",
-                l.getId(), l.getType(), l.getTime(),
-                l.getInstructor(), l.getPrice(), l.getAvailableSpots()));
+                .filter(l -> l.getDay() == day)
+                .sorted(Comparator.comparing(Lesson::getMonth)
+                        .thenComparing(Lesson::getTime))
+                .forEach(l -> System.out.printf("%-5d %-12s %-10s %-10s %-18s £%-7.2f %-6d%n",
+                        l.getId(),
+                        l.getType(),
+                        l.getDay(),
+                        l.getMonth(),   // ✅ NEW
+                        l.getTime(),
+                        l.getPrice(),
+                        l.getAvailableSpots()));
     }
 
     public void viewTimetableByType(ExerciseType type) {
-        System.out.println("\n===== Timetable for " + type + " =====");
+        System.out.println("\n===== Timetable — " + type + " =====");
+        System.out.printf("%-5s %-10s %-10s %-12s %-18s %-8s %-6s%n",
+                "ID", "Day", "Month", "Time", "Instructor", "Price", "Spots");
+        System.out.println("-".repeat(80));
+
         lessons.stream()
-            .filter(l -> l.getType() == type)
-            .sorted(Comparator.comparing(Lesson::getDay)
-                    .thenComparing(Lesson::getTime))
-            .forEach(l -> System.out.printf(
-                "  [%d] %-10s | %-12s | Instructor: %-15s | Price: £%.2f | Spots: %d%n",
-                l.getId(), l.getDay(), l.getTime(),
-                l.getInstructor(), l.getPrice(), l.getAvailableSpots()));
+                .filter(l -> l.getType() == type)
+                .sorted(Comparator.comparing(Lesson::getMonth)
+                        .thenComparing(Lesson::getDay)
+                        .thenComparing(Lesson::getTime))
+                .forEach(l -> System.out.printf("%-5d %-10s %-10s %-12s %-18s £%-7.2f %-6d%n",
+                        l.getId(),
+                        l.getDay(),
+                        l.getMonth(),   // ✅ NEW
+                        l.getTime(),
+                        l.getInstructor(),
+                        l.getPrice(),
+                        l.getAvailableSpots()));
     }
 
     private boolean hasTimeConflict(Member member, Lesson newLesson) {
@@ -210,12 +246,12 @@ public class BookingSystem {
         return "SUCCESS: Review submitted. Thank you!";
     }
 
-    public void generateMonthlyLessonReport() {
-        new ReportGenerator(lessons, bookings).generateMonthlyLessonReport();
+    public void generateMonthlyLessonReport(int month) {
+        new ReportGenerator(lessons, bookings).generateMonthlyLessonReport(month);
     }
 
-    public void generateMonthlyChampionReport() {
-        new ReportGenerator(lessons, bookings).generateMonthlyChampionReport();
+    public void generateMonthlyChampionReport(int month) {
+        new ReportGenerator(lessons, bookings).generateMonthlyChampionReport(month);
     }
 
     private String validateMemberLesson(int memberId, int lessonId) {

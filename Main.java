@@ -9,9 +9,6 @@ public class Main {
 
         DataSeeder.seed(system);
 
-        system.addLesson(new Lesson(ExerciseType.YOGA, BookingDay.SATURDAY, SessionTime.MORNING, "Alice", 10));
-        system.addLesson(new Lesson(ExerciseType.PILATES, BookingDay.SUNDAY, SessionTime.AFTERNOON, "Bob", 12));
-
         boolean running = true;
 
         while (running) {
@@ -26,8 +23,16 @@ public class Main {
                 case 5 -> attendLessonMenu();
                 case 6 -> leaveReviewMenu();
                 case 7 -> viewBookingsMenu();
-                case 8 -> system.generateMonthlyLessonReport();
-                case 9 -> system.generateMonthlyChampionReport();
+                case 8 -> {
+                    System.out.print("Enter month (1–12): ");
+                    int month = readInt();
+                    system.generateMonthlyLessonReport(month);
+                }
+                case 9 -> {
+                    System.out.print("Enter month (1–12): ");
+                    int month = readInt();
+                    system.generateMonthlyChampionReport(month);
+                }
                 case 0 -> running = false;
                 default -> System.out.println("Invalid option.");
             }

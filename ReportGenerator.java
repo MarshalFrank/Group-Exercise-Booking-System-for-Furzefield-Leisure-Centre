@@ -11,14 +11,33 @@ public class ReportGenerator {
         this.bookings = bookings;
     }
 
+    private String getMonthName(int month) {
+        return switch (month) {
+            case 1 -> "January";
+            case 2 -> "February";
+            case 3 -> "March";
+            case 4 -> "April";
+            case 5 -> "May";
+            case 6 -> "June";
+            case 7 -> "July";
+            case 8 -> "August";
+            case 9 -> "September";
+            case 10 -> "October";
+            case 11 -> "November";
+            case 12 -> "December";
+            default -> "Invalid Month";
+        };
+    }
+
     // Report 1: Monthly Lesson Report
-    public void generateMonthlyLessonReport() {
-        System.out.println("\n========== MONTHLY LESSON REPORT ==========");
+    public void generateMonthlyLessonReport(int month) {
+        String monthName = getMonthName(month);
+        System.out.println("\n========== " + monthName + " MONTHLY LESSON REPORT ==========");
         System.out.printf("%-5s %-12s %-10s %-10s %-12s %-12s%n",
                 "ID", "Type", "Day", "Time", "Attendance", "Avg Rating");
         System.out.println("-".repeat(65));
 
-        for (Lesson lesson : lessons) {
+        for (Lesson lesson : lessons.stream().filter(l -> l.getMonth() == month).toList()) {
             List<Booking> attended = lesson.getBookings().stream()
                     .filter(b -> b.getStatus() == BookingStatus.ATTENDED)
                     .collect(Collectors.toList());
@@ -44,8 +63,9 @@ public class ReportGenerator {
     }
 
     // Report 2: Monthly Champion Exercise (highest income)
-    public void generateMonthlyChampionReport() {
-        System.out.println("\n========== MONTHLY CHAMPION EXERCISE REPORT ==========");
+    public void generateMonthlyChampionReport(int month) {
+        String monthName = getMonthName(month);
+        System.out.println("\n========== " + monthName + " MONTHLY CHAMPION EXERCISE REPORT ==========");
 
         Map<ExerciseType, Double> incomeByType = new EnumMap<>(ExerciseType.class);
         Map<ExerciseType, Integer> attendanceByType = new EnumMap<>(ExerciseType.class);
@@ -55,7 +75,7 @@ public class ReportGenerator {
             attendanceByType.put(type, 0);
         }
 
-        for (Lesson lesson : lessons) {
+        for (Lesson lesson : lessons.stream().filter(l -> l.getMonth() == month).toList()) {
             long attendedCount = lesson.getBookings().stream()
                     .filter(b -> b.getStatus() == BookingStatus.ATTENDED)
                     .count();

@@ -17,7 +17,7 @@ public class DataSeeder {
         for (Member m : members) system.addMember(m);
 
         // --- 48 Lessons: 8 weekends × 2 days × 3 sessions ---
-        // Instructors cycle through 5 types; price varies by type
+        // Instructors cycle through 6 types; price varies by type
         ExerciseType[] types = ExerciseType.values();
         String[][] instructors = {
             {"Sarah Bloom", "Mike Pace", "Lucy Rivers", "Tom Hart", "Zoe Stone", "Chelsea Green"},
@@ -32,12 +32,15 @@ public class DataSeeder {
         // Assign exercise type in round-robin per slot
         int typeIndex = 0;
         for (int week = 0; week < 8; week++) {
+
+            int month = (week < 4) ? 5 : 6; // First 4 weekends in May, next 4 in June
+
             for (BookingDay day : days) {
                 for (SessionTime time : times) {
                     ExerciseType type = types[typeIndex % types.length];
                     String instructor = instructors[0][typeIndex % types.length];
                     double price = prices[typeIndex % types.length];
-                    system.addLesson(new Lesson(type, day, time, instructor, price));
+                    system.addLesson(new Lesson(type, day, time, instructor, price, month));
                     typeIndex++;
                 }
             }
