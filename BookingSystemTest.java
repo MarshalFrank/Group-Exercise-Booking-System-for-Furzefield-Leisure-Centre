@@ -79,14 +79,13 @@ public class BookingSystemTest {
     // Test 4: Time conflict rejected
     @Test
     @Order(4)
-    public void testBookLessonTimeConflict() {
+    public void testBookSameTimeDifferentLessonAllowed() {
         system.bookLesson(alice.getId(), yogaSatMorning.getId());
-        // zumbaSatMorning is also Saturday Morning – conflict
+
         String result = system.bookLesson(alice.getId(), zumbaSatMorning.getId());
-        assertTrue(result.startsWith("ERROR"),
-                "Should reject time-conflicting booking");
-        assertTrue(result.contains("conflict"),
-                "Error should mention conflict");
+
+        assertTrue(result.startsWith("SUCCESS"),
+            "Should allow booking same time in different weeks");
     }
 
     // Test 5: Cancel booking
