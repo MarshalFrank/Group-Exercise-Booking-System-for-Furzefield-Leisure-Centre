@@ -67,7 +67,7 @@ public class BookingSystem {
                         l.getId(),
                         l.getType(),
                         l.getDay(),
-                        l.getMonth(),   // ✅ NEW
+                        l.getMonthName(),   // ✅ NEW
                         l.getTime(),
                         l.getPrice(),
                         l.getAvailableSpots()));
@@ -87,7 +87,7 @@ public class BookingSystem {
                 .forEach(l -> System.out.printf("%-5d %-10s %-10s %-12s %-18s £%-7.2f %-6d%n",
                         l.getId(),
                         l.getDay(),
-                        l.getMonth(),   // ✅ NEW
+                        l.getMonthName(),   // ✅ NEW
                         l.getTime(),
                         l.getInstructor(),
                         l.getPrice(),
