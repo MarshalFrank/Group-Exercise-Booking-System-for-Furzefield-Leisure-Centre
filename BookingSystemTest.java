@@ -28,9 +28,9 @@ public class BookingSystemTest {
         system.addMember(dave);
         system.addMember(eve);
 
-        yogaSatMorning    = new Lesson(ExerciseType.YOGA,   BookingDay.SATURDAY, SessionTime.MORNING,   "Inst A", 12.00);
-        zumbaSatMorning   = new Lesson(ExerciseType.ZUMBA,  BookingDay.SATURDAY, SessionTime.MORNING,   "Inst B", 10.00);
-        yogaSatAfternoon  = new Lesson(ExerciseType.YOGA,   BookingDay.SATURDAY, SessionTime.AFTERNOON, "Inst A", 12.00);
+        yogaSatMorning    = new Lesson(ExerciseType.YOGA,   BookingDay.SATURDAY, SessionTime.MORNING,   "Inst A", 12.00, 5);
+        zumbaSatMorning   = new Lesson(ExerciseType.ZUMBA,  BookingDay.SATURDAY, SessionTime.MORNING,   "Inst B", 10.00, 5);
+        yogaSatAfternoon  = new Lesson(ExerciseType.YOGA,   BookingDay.SATURDAY, SessionTime.AFTERNOON, "Inst A", 12.00, 5);
         system.addLesson(yogaSatMorning);
         system.addLesson(zumbaSatMorning);
         system.addLesson(yogaSatAfternoon);
