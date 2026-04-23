@@ -24,12 +24,12 @@ public class Main {
                 case 6 -> leaveReviewMenu();
                 case 7 -> viewBookingsMenu();
                 case 8 -> {
-                    System.out.print("Enter month (1–12): ");
+                    System.out.print("Enter month (From 1 to 12): ");
                     int month = readInt();
                     system.generateMonthlyLessonReport(month);
                 }
                 case 9 -> {
-                    System.out.print("Enter month (1–12): ");
+                    System.out.print("Enter month (From 1 to 12): ");
                     int month = readInt();
                     system.generateMonthlyChampionReport(month);
                 }
