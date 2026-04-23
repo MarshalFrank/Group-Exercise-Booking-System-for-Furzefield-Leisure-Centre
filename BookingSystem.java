@@ -94,15 +94,6 @@ public class BookingSystem {
                         l.getAvailableSpots()));
     }
 
-    private boolean hasTimeConflict(Member member, Lesson newLesson) {
-        return bookings.stream()
-            .filter(b -> b.getMember().getId() == member.getId())
-            .filter(b -> b.getStatus() == BookingStatus.BOOKED
-                      || b.getStatus() == BookingStatus.CHANGED)
-            .anyMatch(b -> b.getLesson().getDay() == newLesson.getDay()
-                        && b.getLesson().getTime() == newLesson.getTime());
-    }
-
     private boolean alreadyBooked(Member member, Lesson lesson) {
         return bookings.stream()
             .filter(b -> b.getMember().getId() == member.getId())
@@ -125,10 +116,7 @@ public class BookingSystem {
 
         if (alreadyBooked(member, lesson))
             return "ERROR: You have already booked this lesson.";
-
-        if (hasTimeConflict(member, lesson))
-            return "ERROR: You have a time conflict with another booking.";
-
+        
         Booking booking = new Booking(member, lesson);
         lesson.getBookings().add(booking);
         bookings.add(booking);
@@ -201,11 +189,6 @@ public class BookingSystem {
             return "ERROR: Already booked on this lesson.";
 
         oldBooking.setStatus(BookingStatus.CANCELLED);
-
-        if (hasTimeConflict(member, newLesson)) {
-            oldBooking.setStatus(BookingStatus.BOOKED);
-            return "ERROR: New lesson conflicts with another booking.";
-        }
 
         Booking newBooking = new Booking(member, newLesson);
         newBooking.setStatus(BookingStatus.CHANGED);
