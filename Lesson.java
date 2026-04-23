@@ -37,6 +37,10 @@ public class Lesson {
     public double getPrice() { return price; }
     public int getCapacity() { return capacity; }
     public int getMonth() { return month; }
+    public String getMonthName() {
+        String name = java.time.Month.of(month).name();
+        return name.substring(0,1) + name.substring(1).toLowerCase();
+    }
     public List<Booking> getBookings() { return bookings; }
 
     public boolean isFull() {
