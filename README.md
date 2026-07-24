@@ -242,10 +242,6 @@ Group-Exercise-Booking-System-for-Furzefield-Leisure-Centre
 ├── test
 │   └── BookingSystemTest.java
 │
-├── images
-│
-├── BookingSystem.jar
-├── run.bat
 └── README.md
 ```
 
