@@ -122,49 +122,49 @@ Reports include:
 
 ## Main Menu
 
-![Main Menu](images/main-menu.png)
+![Main Menu](main-menu.png)
 
 ---
 
 ## Browse Timetable
 
-![Timetable](images/timetable.png)
+![Timetable](timetable.png)
 
 ---
 
 ## Book a Lesson
 
-![Booking](images/book-lesson.png)
+![Booking](book-lesson.png)
 
 ---
 
 ## Change Booking
 
-![Change Booking](images/change-booking.png)
+![Change Booking](change-booking.png)
 
 ---
 
 ## Cancel Booking
 
-![Cancel Booking](images/cancel-booking.png)
+![Cancel Booking](cancel-booking.png)
 
 ---
 
 ## Record Attendance
 
-![Attendance](images/attendance.png)
+![Attendance](attendance.png)
 
 ---
 
 ## Submit Review
 
-![Review](images/review.png)
+![Review](review.png)
 
 ---
 
 ## Monthly Lesson Report
 
-![Monthly Report](images/monthly-report.png)
+![Monthly Report](monthly-report.png)
 
 ---
 
@@ -199,7 +199,7 @@ BookingStatus
 
 # 📚 UML Class Diagram
 
-> *(Insert generated UML diagram here)*
+![uml-class diagram](uml-class-diagram.png)
 
 ```
 BookingSystem
